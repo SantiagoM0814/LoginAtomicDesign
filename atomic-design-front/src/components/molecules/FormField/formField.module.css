@@ -1,0 +1,29 @@
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* espacio entre label, input y error */
+  margin-bottom: 1rem;
+}
+
+.message {
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+
+.errorMessage {
+  color: #dc2626; /* rojo */
+}
+
+.hint {
+  color: #6b7280;
+}
+
+@media (min-width: 768px) {
+  .formField {
+    margin-bottom: 1.25rem;
+  }
+
+  .message {
+    font-size: 0.8rem;
+  }
+}

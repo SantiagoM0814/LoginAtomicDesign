@@ -7,10 +7,8 @@ interface FormFieldProps {
   id: string;
   type?: "text" | "email" | "password";
   value?: string;
-  placeholder?: string;
+  placeholder: string;
   required?: boolean;
-  error?: string;
-  disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,25 +17,20 @@ const FormField = ({
   id,
   type = "text",
   value,
-  placeholder: string,
+  placeholder,
   required = false,
-  error,
-  disabled = false,
   onChange,
 }: FormFieldProps) => {
   return (
     <div className={styles.formField}>
-      <Label htmlFor={id} required={required}/>
+      <Label htmlFor={id} label={label} required={required}/>
       <InputComponent
         id={id}
         type={type}
         value={value}
         placeholder={placeholder}
-        disabled={disabled}
         onChange={onChange}
-        className={error ? styles.error : ""}
       />
-      {error && <small className={styles.errorMessage}>{error}</small>}
     </div>
   );
 };
