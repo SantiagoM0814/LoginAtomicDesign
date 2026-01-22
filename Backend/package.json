@@ -12,8 +12,11 @@
   "type": "commonjs",
   "dependencies": {
     "@types/express": "^5.0.6",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "swagger-ui-express": "^5.0.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "yaml": "^2.8.2"
   }
 }
