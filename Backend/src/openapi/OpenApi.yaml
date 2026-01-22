@@ -15,11 +15,9 @@ servers:
 tags:
   - name: User
     description: Operaciones relacionadas con usuarios
-  - name: Auth
-    description: Autenticación y login
 
 paths:
-  /user:
+  /users:
     get:
       tags:
         - User
@@ -41,7 +39,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternalServerError'
-
+  /users/register:
     post:
       tags:
         - User
@@ -79,11 +77,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorInternalServerError'
-
-  /auth/login:
+  /users/login:
     post:
       tags:
-        - Auth
+        - User
       summary: Login de usuario
       description: Autentica un usuario y retorna un token JWT
       operationId: login
@@ -112,6 +109,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorUnauthorized'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorNotFound'
         '500':
           description: Error interno del servidor
           content:
@@ -134,6 +137,9 @@ components:
           type: string
           format: email
           example: juan@email.com
+        createdAt:
+          type: string
+          example: 2026-01-22T00:00:00.000Z
       required:
         - id
         - nombre
@@ -142,7 +148,7 @@ components:
     UserCreate:
       type: object
       properties:
-        nombre:
+        name:
           type: string
           example: Juan Pérez
         email:
@@ -189,9 +195,6 @@ components:
         message:
           type: string
           example: Datos inválidos
-        error:
-          type: string
-          example: Bad Request
 
     ErrorUnauthorized:
       type: object
@@ -202,9 +205,6 @@ components:
         message:
           type: string
           example: Credenciales inválidas
-        error:
-          type: string
-          example: Unauthorized
       
     ErrorForbidden:
       type: object
@@ -215,9 +215,6 @@ components:
         message:
           type: string
           example: No tiene permisos
-        error:
-         type: string
-         example: Forbidden
     
     ErrorNotFound:
       type: object
@@ -228,9 +225,6 @@ components:
         message:
           type: string
           example: Usuario no encontrado
-        error:
-          type: string
-          example: Not Found
     
     ErrorConflict:
       type: object
@@ -241,9 +235,6 @@ components:
         message:
           type: string
           example: El usuario ya existe
-        error:
-          type: string
-          example: Conflict
     
     ErrorInternalServerError:
       type: object
@@ -254,8 +245,5 @@ components:
         message:
           type: string
           example: Error del servidor
-        error:
-          type: string
-          example: Internal Server Error
       
 
