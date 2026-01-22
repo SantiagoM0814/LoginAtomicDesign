@@ -1,0 +1,17 @@
+export async function registerApi(name: string, email: string, password: string) {
+    
+  const response = await fetch('http://localhost:3001/api/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name, email, password }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Error al registrarse');
+  }
+
+  return response.json();
+}
