@@ -1,3 +1,4 @@
+// Legacy exports - mantener para compatibilidad con tests existentes
 export interface User {
   id: string;
   email: string;
@@ -29,3 +30,7 @@ export interface ApiResponse<T> {
   message: string;
   data?: T;
 }
+
+// Re-export desde application layer para uso moderno
+export * from '../application/dto/AuthDtos.js';
+

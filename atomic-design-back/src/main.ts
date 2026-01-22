@@ -1,11 +1,8 @@
 import express, { Express } from 'express';
 import cors from 'cors';
-import {
-  registerController,
-  loginController,
-  logoutController,
-  getUsersController,
-} from './organisms/authController.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerSpec } from './infrastructure/http/swagger.js';
+import { appRoutes } from './infrastructure/routes/index.js';
 
 const app: Express = express();
 const PORT = 3001;
@@ -14,18 +11,28 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 
-// Rutas de autenticación
-app.post('/api/auth/register', registerController);
-app.post('/api/auth/login', loginController);
-app.post('/api/auth/logout', logoutController);
-app.get('/api/users', getUsersController);
+// OpenAPI/Swagger documentation
+app.use('/api-docs', swaggerUi.serve);
+app.get('/api-docs', swaggerUi.setup(swaggerSpec, { swaggerUrl: '/api-docs.json' }));
+app.get('/api-docs.json', (_req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(swaggerSpec);
+});
 
-// Health check
-app.get('/api/health', (_req: express.Request, res: express.Response): void => {
-  res.status(200).json({ status: 'ok' });
+// API Routes
+app.use('/api', appRoutes);
+
+// 404 handler
+app.use((_req, res) => {
+  res.status(404).json({
+    success: false,
+    message: 'Ruta no encontrada',
+  });
 });
 
 // Iniciar servidor
 app.listen(PORT, () => {
   console.warn(`Servidor corriendo en http://localhost:${PORT}`);
+  console.warn(`Documentación OpenAPI: http://localhost:${PORT}/api-docs`);
 });
+
