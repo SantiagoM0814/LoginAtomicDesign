@@ -1,0 +1,28 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.register-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.register-form__error {
+  color: red;
+  font-size: 12px;
+}
+.register-form__api-error {
+  color: red;
+  font-size: 13px;
+  text-align: center;
+}
+.register-form__success {
+  color: green;
+  font-size: 13px;
+  text-align: center;
+}
+.register-form__button {
+  margin-top: 12px;
+}
