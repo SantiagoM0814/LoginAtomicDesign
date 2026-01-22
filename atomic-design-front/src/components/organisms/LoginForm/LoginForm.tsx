@@ -39,7 +39,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         // Espera que el backend devuelva { name: string, ... }
         const result = await loginApi(email, password);
         setSuccess(true);
-        onSubmit(result.name || email.split('@')[0]);
+        onSubmit(result.nombre || email.split('@')[0]);
       } catch (err: any) {
         setApiError(err.message || 'Error al iniciar sesión');
       } finally {

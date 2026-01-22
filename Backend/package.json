@@ -23,6 +23,7 @@
     "yaml": "^2.8.2"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6"
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19"
   }
 }

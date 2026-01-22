@@ -41,6 +41,12 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
       try {
         await registerApi(name, email, password);
         setSuccess(true);
+
+        setName('');
+        setEmail('');
+        setPassword('');
+        setErrors({});
+
         onSubmit(name, email, password);
       } catch (err: any) {
         setApiError(err.message || 'Error al registrarse');
