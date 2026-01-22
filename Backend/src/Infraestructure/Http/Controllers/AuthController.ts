@@ -16,10 +16,18 @@ export class AuthController {
             const { contrasena, ...userSafe } = user;
             return res.status(200).json(userSafe);
         } catch (error) {
-            return res.status(500).json({
-                statusCode: 500,
-                message: "Internal Server Error"
-            });
+            if (error instanceof Error) {
+                switch (error.message) {
+                    case "USER_NOT_FOUND":
+                        return res.status(404).json({ statusCode: 404, message: "Usuario no encontrado" });
+    
+                    case "INVALID_CREDENTIALS":
+                        return res.status(401).json({ statusCode: 401, message: "Credenciales incorrectas" });
+    
+                    default:
+                        return res.status(500).json({ statusCode: 500, message: "Error interno del servidor" });
+                }
+            }
         }
     }
 
@@ -32,10 +40,15 @@ export class AuthController {
 
             return res.status(201).json(safeUser);
         } catch (error) {
-            return res.status(500).json({
-                statusCode: 500,
-                message: (error instanceof Error) ? error.message : 'Error desconocido'
-            });
+            if (error instanceof Error) {
+                switch (error.message) {
+                    case "EMAIL_ALREADY_EXISTS":
+                        return res.status(409).json({ statusCode: 409, message: "El correo ya está registrado" });
+    
+                    default:
+                        return res.status(500).json({ statusCode: 500, message: "Error interno del servidor" });
+                }
+            }
         }
     }
 }
