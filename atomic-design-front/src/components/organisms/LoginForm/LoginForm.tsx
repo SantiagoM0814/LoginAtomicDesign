@@ -57,6 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          placeholder="Ingresa tu email"
         />
         {errors.email && <span className="login-form__error">{errors.email}</span>}
       </div>
@@ -67,6 +68,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          placeholder="Ingresa tu contraseña"
         />
         {errors.password && <span className="login-form__error">{errors.password}</span>}
       </div>

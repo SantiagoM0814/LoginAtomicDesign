@@ -64,6 +64,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           label="Nombre"
           value={name}
           onChange={e => setName(e.target.value)}
+          placeholder="Ingresa tu nombre"
         />
         {errors.name && <span className="register-form__error">{errors.name}</span>}
       </div>
@@ -74,6 +75,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           type="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+          placeholder="Ingresa tu email"
         />
         {errors.email && <span className="register-form__error">{errors.email}</span>}
       </div>
@@ -84,6 +86,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
           type="password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          placeholder="Ingresa tu contraseña"
         />
         {errors.password && <span className="register-form__error">{errors.password}</span>}
       </div>
