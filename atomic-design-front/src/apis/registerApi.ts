@@ -5,7 +5,7 @@ export async function registerApi(name: string, email: string, password: string)
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ name, email, password }),
+    body: JSON.stringify({ name, email: email.toLowerCase(), password }),
   });
 
   if (!response.ok) {

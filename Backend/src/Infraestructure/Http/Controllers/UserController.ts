@@ -11,7 +11,7 @@ export class UserController {
             const users = await this.getUsers.execute();
 
             return res.status(200).json(users);
-        } catch (_error) {
+        } catch {
             return res.status(500).json({
                 message: "Error getting users"
             });

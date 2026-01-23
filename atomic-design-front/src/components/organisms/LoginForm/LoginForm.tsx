@@ -37,9 +37,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit: _onSubmit }) => {
     if (Object.keys(newErrors).length === 0) {
       setLoading(true);
       try {
-        const result = await loginApi(email, password);
+        const normalizedEmail = email.toLowerCase();
+        const result = await loginApi(normalizedEmail, password);
         setSuccess(true);
-        _onSubmit(result.nombre || email.split('@')[0]);
+        _onSubmit(result.nombre || normalizedEmail.split('@')[0]);
       } catch (err: unknown) {
         setApiError(err instanceof Error ? err.message : 'Error al iniciar sesión');
       } finally {

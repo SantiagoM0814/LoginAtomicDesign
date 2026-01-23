@@ -12,8 +12,9 @@ export class RegisterUser {
     async execute(data: UserRegister): Promise<User> {
 
         const { correo, contrasena, nombre } = data;
+        const normalizedEmail = correo.toLowerCase().trim();
 
-        const existingUser = await this.userRepository.findByEmail(correo);
+        const existingUser = await this.userRepository.findByEmail(normalizedEmail);
 
         if (existingUser) {
             throw new Error("EMAIL_ALREADY_EXISTS");
@@ -21,7 +22,7 @@ export class RegisterUser {
 
         const user = new User(
             crypto.randomUUID(),
-            correo,
+            normalizedEmail,
             contrasena,
             nombre,
             new Date()

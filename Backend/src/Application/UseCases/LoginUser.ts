@@ -6,7 +6,8 @@ export class LoginUser {
     ) { }
 
     async execute(email: string, password: string) {
-        const user = await this.userRepository.findByEmail(email);
+        const normalizedEmail = email.toLowerCase().trim();
+        const user = await this.userRepository.findByEmail(normalizedEmail);
 
         if (!user) {
             throw new Error("USER_NOT_FOUND");
