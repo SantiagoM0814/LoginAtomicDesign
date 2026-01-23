@@ -1,13 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import RegisterForm from '../../organisms/RegisterForm/RegisterForm';
 import './RegisterPage.css';
 import './RegisterPageCustom.css';
 
 const RegisterPage: React.FC = () => {
-  const handleRegister = (name: string, email: string, password: string) => {
+  const navigate = useNavigate();
 
-    console.log('Registro:', name, email, password);
+  const handleRegister = () => {
+    navigate('/');
   };
 
   return (

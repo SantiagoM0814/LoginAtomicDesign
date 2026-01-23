@@ -21,6 +21,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit: _onSubmit }) => {
   const [apiError, setApiError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+
   const handleSubmit = async (_e: React.FormEvent) => {
     _e.preventDefault();
     setApiError(null);
@@ -41,21 +42,19 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit: _onSubmit }) => {
       try {
         await registerApi(name, email, password);
         setSuccess(true);
-
         setName('');
         setEmail('');
         setPassword('');
         setErrors({});
-
         _onSubmit(name, email, password);
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : 'Error al registrarse';
-        setApiError(message);
+        setApiError(err instanceof Error ? err.message : 'Error al registrarse');
       } finally {
         setLoading(false);
       }
     }
   };
+
 
   return (
     <form className="register-form" onSubmit={handleSubmit}>
