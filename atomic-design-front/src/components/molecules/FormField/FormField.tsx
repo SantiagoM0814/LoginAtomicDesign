@@ -9,15 +9,15 @@ interface FormFieldProps {
   label: string;
   type?: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 }
 
 
-const FormField: React.FC<FormFieldProps> = ({ id, label, type = 'text', value, onChange, placeholder }) => (
+const FormField: React.FC<FormFieldProps> = ({ id, label, type = 'text', value, onChange: _onChange, placeholder }) => (
   <div className="form-field">
     <Label htmlFor={id}>{label}</Label>
-    <Input id={id} type={type} value={value} onChange={onChange} placeholder={placeholder} />
+    <Input id={id} type={type} value={value} onChange={_onChange} placeholder={placeholder} />
   </div>
 );
 

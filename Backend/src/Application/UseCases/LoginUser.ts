@@ -1,5 +1,4 @@
 import { IUserRepository } from "../../Domain/Repositories/IUserRepository";
-import { User } from "../../Domain/Entities/User";
 
 export class LoginUser {
     constructor(

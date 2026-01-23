@@ -13,5 +13,6 @@ app.use("/users", authRouter)
 const PORT = 3000;
 
 app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Server listening http://localhost:${PORT}`)
 });

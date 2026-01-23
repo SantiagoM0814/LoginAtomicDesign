@@ -5,7 +5,7 @@ import { loginApi } from '../../../apis/authApi';
 import './LoginForm.css';
 
 interface LoginFormProps {
-  onSubmit: (userName: string) => void;
+  onSubmit: (_userName: string) => void;
 }
 
 const validateEmail = (email: string) => {
@@ -13,7 +13,7 @@ const validateEmail = (email: string) => {
 };
 
 
-const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ onSubmit: _onSubmit }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -21,8 +21,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [apiError, setApiError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (_e: React.FormEvent) => {
+    _e.preventDefault();
     setApiError(null);
     setSuccess(false);
     const newErrors: { email?: string; password?: string } = {};
@@ -39,9 +39,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         // Espera que el backend devuelva { name: string, ... }
         const result = await loginApi(email, password);
         setSuccess(true);
-        onSubmit(result.nombre || email.split('@')[0]);
-      } catch (err: any) {
-        setApiError(err.message || 'Error al iniciar sesión');
+        _onSubmit(result.nombre || email.split('@')[0]);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Error al iniciar sesión';
+        setApiError(message);
       } finally {
         setLoading(false);
       }

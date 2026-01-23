@@ -5,14 +5,14 @@ import { registerApi } from '../../../apis/registerApi';
 import './RegisterForm.css';
 
 interface RegisterFormProps {
-  onSubmit: (name: string, email: string, password: string) => void;
+  onSubmit: (_name: string, _email: string, _password: string) => void;
 }
 
 const validateEmail = (email: string) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit: _onSubmit }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,8 +21,8 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const [apiError, setApiError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (_e: React.FormEvent) => {
+    _e.preventDefault();
     setApiError(null);
     setSuccess(false);
     const newErrors: { name?: string; email?: string; password?: string } = {};
@@ -47,9 +47,10 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
         setPassword('');
         setErrors({});
 
-        onSubmit(name, email, password);
-      } catch (err: any) {
-        setApiError(err.message || 'Error al registrarse');
+        _onSubmit(name, email, password);
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : 'Error al registrarse';
+        setApiError(message);
       } finally {
         setLoading(false);
       }

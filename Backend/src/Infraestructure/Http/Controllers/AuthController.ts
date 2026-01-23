@@ -13,7 +13,7 @@ export class AuthController {
             const { email, password } = req.body;
             const user = await this.loginUser.execute(email, password);
 
-            const { contrasena, ...userSafe } = user;
+            const { contrasena: _contrasena, ...userSafe } = user;
             return res.status(200).json(userSafe);
         } catch (error) {
             if (error instanceof Error) {
@@ -36,7 +36,7 @@ export class AuthController {
             const { name, email, password } = req.body;
             const user = await this.registerUser.execute({nombre: name, correo: email, contrasena: password});
 
-            const { contrasena, ...safeUser } = user;
+            const { contrasena: _contrasena, ...safeUser } = user;
 
             return res.status(201).json(safeUser);
         } catch (error) {

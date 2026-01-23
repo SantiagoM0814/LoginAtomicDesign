@@ -5,16 +5,16 @@ import './LoginPage.css';
 import './LoginPageCustom.css';
 
 interface LoginPageProps {
-  onLogin: (userName: string) => void;
+  onLogin: (_userName: string) => void;
 }
 
 
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage: React.FC<LoginPageProps> = ({ onLogin: _onLogin }) => {
   const navigate = useNavigate();
 
   // Recibe el nombre real del usuario desde LoginForm
   const handleLogin = (userName: string) => {
-    onLogin(userName);
+    _onLogin(userName);
     navigate('/dashboard');
   };
 
