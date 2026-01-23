@@ -1,50 +1,119 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
 import LoginForm from './LoginForm';
 
-describe('LoginForm Component', () => {
-  const mockonSubmit = vi.fn();
+// 🔹 Mock del API
+vi.mock('../../../apis/authApi', () => ({
+  loginApi: vi.fn()
+}));
 
-  it('should render login form', () => {
-    const { container } = render(
-      <BrowserRouter>
-        <LoginForm onSubmit={mockonSubmit} />
-      </BrowserRouter>
-    );
+import { loginApi } from '../../../apis/authApi';
+
+describe('LoginForm Component', () => {
+  const mockOnSubmit = vi.fn();
+
+  // 👉 versión tipada del mock
+  const mockedLoginApi = vi.mocked(loginApi);
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renderiza el formulario correctamente', () => {
+    const { container } = render(<LoginForm onSubmit={mockOnSubmit} />);
     const form = container.querySelector('form');
     expect(form).toBeInTheDocument();
   });
 
-  it('should render submit button', () => {
-    render(
-      <BrowserRouter>
-        <LoginForm onSubmit={mockonSubmit} />
-      </BrowserRouter>
-    );
+  it('renderiza el botón de envío', () => {
+    render(<LoginForm onSubmit={mockOnSubmit} />);
     const button = screen.getByRole('button', { name: /iniciar sesión/i });
     expect(button).toBeInTheDocument();
   });
 
-  it('should render input fields for email and password', () => {
-    render(
-      <BrowserRouter>
-        <LoginForm onSubmit={mockonSubmit} />
-      </BrowserRouter>
-    );
-    const inputs = screen.getAllByRole('textbox');
-    expect(inputs.length).toBeGreaterThanOrEqual(1);
+  it('renderiza los campos email y contraseña', () => {
+    render(<LoginForm onSubmit={mockOnSubmit} />);
+    expect(screen.getByLabelText('Email')).toBeInTheDocument();
+    expect(screen.getByLabelText('Contraseña')).toBeInTheDocument();
   });
 
-  it('should render labels for email and password', () => {
-    render(
-      <BrowserRouter>
-        <LoginForm onSubmit={mockonSubmit} />
-      </BrowserRouter>
+  it('muestra error si el email es inválido', async () => {
+    render(<LoginForm onSubmit={mockOnSubmit} />);
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /iniciar sesión/i })
     );
-    const emailLabel = screen.getByText('Email');
-    const passwordLabel = screen.getByText('Contraseña');
-    expect(emailLabel).toBeInTheDocument();
-    expect(passwordLabel).toBeInTheDocument();
+
+    expect(
+      await screen.findByText('Email inválido')
+    ).toBeInTheDocument();
+  });
+
+  it('muestra error si la contraseña está vacía', async () => {
+    render(<LoginForm onSubmit={mockOnSubmit} />);
+
+    await userEvent.type(
+      screen.getByLabelText('Email'),
+      'test@test.com'
+    );
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /iniciar sesión/i })
+    );
+
+    expect(
+      await screen.findByText('La contraseña es obligatoria')
+    ).toBeInTheDocument();
+  });
+
+  it('realiza login exitoso y llama onSubmit', async () => {
+    mockedLoginApi.mockResolvedValue({ nombre: 'Juan' });
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
+
+    await userEvent.type(
+      screen.getByLabelText('Email'),
+      'juan@test.com'
+    );
+    await userEvent.type(
+      screen.getByLabelText('Contraseña'),
+      '123456'
+    );
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /iniciar sesión/i })
+    );
+
+    expect(
+      await screen.findByText('¡Login exitoso!')
+    ).toBeInTheDocument();
+
+    expect(mockOnSubmit).toHaveBeenCalledWith('Juan');
+  });
+
+  it('muestra error cuando el API falla', async () => {
+    mockedLoginApi.mockRejectedValue(
+      new Error('Credenciales inválidas')
+    );
+
+    render(<LoginForm onSubmit={mockOnSubmit} />);
+
+    await userEvent.type(
+      screen.getByLabelText('Email'),
+      'test@test.com'
+    );
+    await userEvent.type(
+      screen.getByLabelText('Contraseña'),
+      '123456'
+    );
+
+    await userEvent.click(
+      screen.getByRole('button', { name: /iniciar sesión/i })
+    );
+
+    expect(
+      await screen.findByText('Credenciales inválidas')
+    ).toBeInTheDocument();
   });
 });
