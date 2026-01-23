@@ -25,5 +25,12 @@ describe('GetUsers', () => {
         new User ('2', 'User2@example.com', 'Password456!', 'User Two', new Date('2026-01-23')),
         new User ('3', 'User3@example.com', 'Password789!', 'User Three', new Date('2026-01-23'))
     ];
+    mockUserRepository.findAll.mockResolvedValue(mockUsers);
+
+    const result = await getUsersUseCase.execute();
+
+    expect(result).toEqual(mockUsers);
+    expect(result).toHaveLength(3);
+    expect(mockUserRepository.findAll).toHaveBeenCalledTimes(1);
   })
 });
