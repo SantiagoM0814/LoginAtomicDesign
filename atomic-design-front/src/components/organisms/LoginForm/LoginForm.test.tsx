@@ -1,3 +1,4 @@
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -40,8 +41,9 @@ describe('LoginForm Component', () => {
 
   it('muestra error si el email es inválido', async () => {
     render(<LoginForm onSubmit={mockOnSubmit} />);
+    const user = userEvent.setup();
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /iniciar sesión/i })
     );
 
@@ -53,12 +55,13 @@ describe('LoginForm Component', () => {
   it('muestra error si la contraseña está vacía', async () => {
     render(<LoginForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Email'),
       'test@test.com'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /iniciar sesión/i })
     );
 
@@ -72,16 +75,17 @@ describe('LoginForm Component', () => {
 
     render(<LoginForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Email'),
       'juan@test.com'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Contraseña'),
       '123456'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /iniciar sesión/i })
     );
 
@@ -99,16 +103,17 @@ describe('LoginForm Component', () => {
 
     render(<LoginForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Email'),
       'test@test.com'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Contraseña'),
       '123456'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /iniciar sesión/i })
     );
 
