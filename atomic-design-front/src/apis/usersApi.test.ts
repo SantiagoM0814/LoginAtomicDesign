@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import './usersApi';
+import * as usersApi from './usersApi';
+
 describe('usersApi', () => {
-  it('dummy test', () => {
-    expect(true).toBe(true);
+  it('debe importar sin errores', () => {
+    expect(usersApi).toBeDefined();
   });
 });
