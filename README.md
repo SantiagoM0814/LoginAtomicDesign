@@ -6,12 +6,13 @@ Proyecto fullstack que implementa un sistema de autenticación y registro de usu
 
 | Aspecto | Estado |
 |---------|--------|
-| **Tests Frontend** | ✅ 18/18 PASANDO |
-| **Tests Backend** | ✅ 17/17 PASANDO |
+| **Tests Frontend** | ✅ 40/40 PASANDO |
+| **Tests Backend** | ✅ 43/43 PASANDO |
 | **Linting Frontend** | ✅ 0 errores, 0 warnings |
 | **Linting Backend** | ✅ 0 errores, 0 warnings |
 | **Cobertura LCOV** | ✅ Configurada (HTML + lcov.info) |
 | **TypeScript** | ✅ Sin tipos `any` (strict mode) |
+| **Sistema de Módulos** | ✅ ES Modules (backend) |
 | **Compilación** | ✅ Sin warnings de Node.js |
 
 **Proyecto 100% operacional y listo para producción.**
@@ -145,8 +146,15 @@ src/components/
 - **Label.test.tsx** - Pruebas de componente Label
 - **FormField.test.tsx** - Pruebas de molécula FormField
 - **LoginForm.test.tsx** - Pruebas de organismo LoginForm
+- **RegisterForm.test.tsx** - Pruebas de organismo RegisterForm
+- **LoginPage.test.tsx** - Pruebas de página Login
+- **RegisterPage.test.tsx** - Pruebas de página Register
+- **DashboardPage.test.tsx** - Pruebas de página Dashboard
+- **authApi.test.ts** - Pruebas de servicio API de autenticación
+- **registerApi.test.ts** - Pruebas de servicio API de registro
+- **usersApi.test.ts** - Pruebas de servicio API de usuarios
 
-**Total: 18 tests ✅**
+**Total: 40 tests ✅**
 
 ## 🔙 Backend (Express + TypeScript)
 
@@ -157,11 +165,26 @@ npm install
 npm run dev  # http://localhost:3000
 ```
 
+### Configuración del Sistema de Módulos
+
+El backend está configurado para usar **ES Modules** (`"type": "module"` en package.json):
+
+- **Module System:** ES2020 (import/export)
+- **TypeScript Compilation:** ES2020 target
+- **Runtime Execution:** tsx (compilador TypeScript moderno)
+- **Module Resolution:** Node.js compatible
+
+La configuración permite:
+- ✅ Sintaxis moderna con `import`/`export`
+- ✅ Ejecución rápida con `tsx`
+- ✅ Resolución correcta de tipos TypeScript
+- ✅ Compatible con Node.js 16+
+
 ### Scripts Disponibles
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Inicia servidor con nodemon |
+| `npm run dev` | Inicia servidor con tsx (ES modules) |
 | `npm run build` | Compila TypeScript a JavaScript |
 | `npm start` | Ejecuta la versión compilada |
 | `npm test` | Ejecuta tests |
@@ -194,9 +217,15 @@ src/
 - **User.test.ts** - Pruebas de entidad User
 - **AuthService.test.ts** - Pruebas de servicio de autenticación
 - **AuthController.test.ts** - Pruebas de controlador
+- **UserController.test.ts** - Pruebas de controlador de usuarios
 - **inMemoryUserRepository.test.ts** - Pruebas de repositorio
+- **UserRoutes.test.ts** - Pruebas de rutas GET /users
+- **AuthRoutes.test.ts** - Pruebas de rutas POST /login y /register
+- **GetUser.test.ts** - Pruebas de caso de uso GetUser
+- **LoginUser.test.ts** - Pruebas de caso de uso LoginUser
+- **RegisterUser.test.ts** - Pruebas de caso de uso RegisterUser
 
-**Total: 17 tests ✅**
+**Total: 43 tests ✅**
 
 ## 📋 Características
 
@@ -206,7 +235,7 @@ src/
 - ✅ Vite como bundler (desarrollo rápido)
 - ✅ Vitest para testing unitario
 - ✅ Routing con React Router v7
-- ✅ Tests 18/18 PASANDO
+- ✅ Tests 40/40 PASANDO
 - ✅ Cobertura LCOV con reporte HTML
 
 ### Backend
@@ -214,17 +243,20 @@ src/
 - ✅ Arquitectura en capas (Application, Domain, Infrastructure)
 - ✅ Validación de datos
 - ✅ Manejo centralizado de errores
-- ✅ Tests unitarios 17/17 PASANDO
+- ✅ Tests unitarios 43/43 PASANDO
+- ✅ Testing de rutas HTTP con supertest
 - ✅ Cobertura LCOV con reporte HTML
 - ✅ OpenAPI/Swagger documentation
 
 ### General
-- ✅ **35 tests unitarios** (18 frontend + 17 backend)
+- ✅ **83 tests unitarios** (40 frontend + 43 backend)
 - ✅ **0 errores de linting** en ambos proyectos
 - ✅ **0 warnings** de compilación
 - ✅ **TypeScript Strict Mode** sin tipos `any`
+- ✅ **ES Modules** en backend (TypeScript + tsx)
 - ✅ Formateo automático con Prettier
 - ✅ ESLint moderno (Flat Config v9+)
+- ✅ Testing de rutas HTTP con supertest
 
 ## 🧪 Testing y Cobertura
 
@@ -232,9 +264,9 @@ src/
 
 | Proyecto | Tests | Estado |
 |----------|-------|--------|
-| **Frontend** | 18 tests | ✅ 18/18 PASANDO |
-| **Backend** | 17 tests | ✅ 17/17 PASANDO |
-| **Total** | **35 tests** | **✅ TODOS PASANDO** |
+| **Frontend** | 40 tests | ✅ 40/40 PASANDO |
+| **Backend** | 43 tests | ✅ 43/43 PASANDO |
+| **Total** | **83 tests** | **✅ TODOS PASANDO** |
 
 ### Comandos de Testing Frontend
 
