@@ -21,6 +21,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit: _onSubmit }) => {
   const [apiError, setApiError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+
   const handleSubmit = async (_e: React.FormEvent) => {
     _e.preventDefault();
     setApiError(null);
@@ -36,18 +37,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit: _onSubmit }) => {
     if (Object.keys(newErrors).length === 0) {
       setLoading(true);
       try {
-        // Espera que el backend devuelva { name: string, ... }
         const result = await loginApi(email, password);
         setSuccess(true);
         _onSubmit(result.nombre || email.split('@')[0]);
       } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : 'Error al iniciar sesión';
-        setApiError(message);
+        setApiError(err instanceof Error ? err.message : 'Error al iniciar sesión');
       } finally {
         setLoading(false);
       }
     }
   };
+
 
   return (
     <form className="login-form" onSubmit={handleSubmit}>
