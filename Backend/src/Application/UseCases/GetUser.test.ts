@@ -1,4 +1,4 @@
-describe ('GetUsers'), () => {
+describe ('GetUsers', () => {
 
-    
-}
+    let getUsersUseCase: GetUsers;
+})
