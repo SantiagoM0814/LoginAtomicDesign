@@ -1,3 +1,4 @@
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -48,8 +49,9 @@ describe('RegisterForm Component', () => {
 
   it('muestra error si el nombre está vacío', async () => {
     render(<RegisterForm onSubmit={mockOnSubmit} />);
+    const user = userEvent.setup();
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /registrarse/i })
     );
 
@@ -61,12 +63,13 @@ describe('RegisterForm Component', () => {
   it('muestra error si el email es inválido', async () => {
     render(<RegisterForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Nombre'),
       'Juan'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /registrarse/i })
     );
 
@@ -78,16 +81,17 @@ describe('RegisterForm Component', () => {
   it('muestra error si la contraseña está vacía', async () => {
     render(<RegisterForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Nombre'),
       'Juan'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Email'),
       'juan@test.com'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /registrarse/i })
     );
 
@@ -101,20 +105,21 @@ describe('RegisterForm Component', () => {
 
     render(<RegisterForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Nombre'),
       'Juan'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Email'),
       'juan@test.com'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Contraseña'),
       '123456'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /registrarse/i })
     );
 
@@ -136,20 +141,21 @@ describe('RegisterForm Component', () => {
 
     render(<RegisterForm onSubmit={mockOnSubmit} />);
 
-    await userEvent.type(
+    const user = userEvent.setup();
+    await user.type(
       screen.getByLabelText('Nombre'),
       'Juan'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Email'),
       'juan@test.com'
     );
-    await userEvent.type(
+    await user.type(
       screen.getByLabelText('Contraseña'),
       '123456'
     );
 
-    await userEvent.click(
+    await user.click(
       screen.getByRole('button', { name: /registrarse/i })
     );
 
