@@ -6,6 +6,7 @@ const config: Config = {
   testMatch: ['**/*.test.ts'],
   collectCoverageFrom: [
     'src/**/*.ts',
+    "!src/**/dependencies.ts",
     '!src/index.ts'
   ]
 };
